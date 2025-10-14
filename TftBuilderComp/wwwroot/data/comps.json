@@ -1,0 +1,547 @@
+[
+  {
+    "name": "Mighty Mecha Karma-Senna Carrys",
+    "champions": [
+      8,
+      1,
+      7,
+      16,
+      36,
+      45,
+      47,
+      51,
+      62,
+      50,
+      63
+    ],
+    "coreChampions": [
+      {
+        "id": 8,
+        "weight": 2
+      },
+      {
+        "id": 36,
+        "weight": 2.5
+      },
+      {
+        "id": 45,
+        "weight": 3
+      },
+      {
+        "id": 47,
+        "weight": 3
+      }
+    ],
+    "requiredTraits": [
+      {
+        "name": "Mighty Mech",
+        "minUnits": 3,
+        "weight": 3
+      },
+      {
+        "name": "Mighty Mech",
+        "minUnits": 5,
+        "weight": 5
+      },
+      {
+        "name": "Mighty Mech",
+        "minUnits": 7,
+        "weight": 7
+      }
+    ],
+    "coreItems": [
+      {
+        "id": 8,
+        "weight": 3,
+        "maxEffective": 5
+      },
+      {
+        "id": 4,
+        "weight": 2,
+        "maxEffective": 3
+      }
+    ],
+    "recommendedItems": [
+      {
+        "id": 3,
+        "weight": 1.5,
+        "maxEffective": 3
+      },
+      {
+        "id": 2,
+        "weight": 1.5,
+        "maxEffective": 2
+      },
+      {
+        "id": 1,
+        "weight": 1,
+        "maxEffective": 2
+      }
+    ],
+    "tier": "C"
+  },
+  {
+    "Id": 2,
+    "name": "Mentor Mighty Mech Ryze",
+    "description": "Composición con synergy Mentor + Mighty Mech, carry principal Ryze.",
+    "champions": [ 2, 43, 37, 50 ],
+    "coreChampions": [
+      {
+        "id": 45,
+        "weight": 3
+      },
+      {
+        "id": 37,
+        "weight": 2
+      }
+    ],
+    "requiredTraits": [
+      {
+        "name": "Mentor",
+        "minUnits": 2,
+        "weight": 3
+      },
+      {
+        "name": "Mighty Mech",
+        "minUnits": 3,
+        "weight": 4
+      }
+    ],
+    "recommendedItems": [
+      {
+        "id": 3,
+        "weight": 2,
+        "maxEffective": 2
+      },
+      {
+        "id": 8,
+        "weight": 1,
+        "maxEffective": 2
+      }
+    ],
+    "coreItems": [
+      {
+        "id": 3,
+        "weight": 3,
+        "maxEffective": 1
+      }
+    ]
+  },
+
+  {
+    "Id": 3,
+    "name": "Varus/Tf Fast 9",
+    "description": "Legendary cap version of Varus and a duo carry in TF or Zyra. Make sure you have a mana item for Varus (Blue Buff \u003E Shojin but both are good). Itemize whichever duo carry you 2* first (TF 2 \u003E Zyra 2 \u003E TF \u00601).",
+    "champions": [
+      4,
+      15,
+      38,
+      17,
+      45,
+      48,
+      60,
+      63,
+      56,
+      61
+    ],
+    "coreChampions": [
+      {
+        "id": 4,
+        "weight": 2
+      },
+      {
+        "id": 15,
+        "weight": 2
+      },
+      {
+        "id": 48,
+        "weight": 2
+      },
+      {
+        "id": 60,
+        "weight": 2
+      },
+      {
+        "id": 63,
+        "weight": 2
+      },
+      {
+        "id": 61,
+        "weight": 2
+      }
+    ],
+    "requiredTraits": [],
+    "recommendedItems": [
+      {
+        "id": 3,
+        "weight": 1.5,
+        "maxEffective": 6
+      },
+      {
+        "id": 8,
+        "weight": 1.5,
+        "maxEffective": 5
+      }
+    ],
+    "coreItems": [
+      {
+        "id": 1,
+        "weight": 1,
+        "maxEffective": 1
+      },
+      {
+        "id": 6,
+        "weight": 2,
+        "maxEffective": 3
+      },
+      {
+        "id": 4,
+        "weight": 2,
+        "maxEffective": 3
+      },
+      {
+        "id": 7,
+        "weight": 1.5,
+        "maxEffective": 3
+      }
+    ]
+  },
+  {
+    "Id": 3,
+    "name": "Varus/Tf Fast 9",
+    "description": "Legendary cap version of Varus and a duo carry in TF or Zyra. Make sure you have a mana item for Varus (Blue Buff \u003E Shojin but both are good). Itemize whichever duo carry you 2* first (TF 2 \u003E Zyra 2 \u003E TF \u00601).",
+    "champions": [
+      4,
+      15,
+      38,
+      17,
+      45,
+      48,
+      60,
+      63,
+      56,
+      61
+    ],
+    "coreChampions": [
+      {
+        "id": 4,
+        "weight": 2
+      },
+      {
+        "id": 15,
+        "weight": 2
+      },
+      {
+        "id": 48,
+        "weight": 2
+      },
+      {
+        "id": 60,
+        "weight": 2
+      },
+      {
+        "id": 63,
+        "weight": 2
+      },
+      {
+        "id": 61,
+        "weight": 2
+      }
+    ],
+    "requiredTraits": [],
+    "recommendedItems": [
+      {
+        "id": 3,
+        "weight": 1.5,
+        "maxEffective": 6
+      },
+      {
+        "id": 8,
+        "weight": 1.5,
+        "maxEffective": 5
+      }
+    ],
+    "coreItems": [
+      {
+        "id": 1,
+        "weight": 1,
+        "maxEffective": 1
+      },
+      {
+        "id": 6,
+        "weight": 2,
+        "maxEffective": 3
+      },
+      {
+        "id": 4,
+        "weight": 2,
+        "maxEffective": 3
+      },
+      {
+        "id": 7,
+        "weight": 1.5,
+        "maxEffective": 3
+      }
+    ]
+  },
+  {
+    "name": "Star Guardians Jinx Carry",
+    "champions": [
+      11,
+      13,
+      23,
+      25,
+      20,
+      34,
+      48,
+      50,
+      46,
+      59,
+      61,
+      56
+    ],
+    "coreChampions": [
+      {
+        "id": 11,
+        "weight": 2
+      },
+      {
+        "id": 13,
+        "weight": 2
+      },
+      {
+        "id": 50,
+        "weight": 3
+      },
+      {
+        "id": 46,
+        "weight": 3
+      },
+      {
+        "id": 59,
+        "weight": 2
+      }
+    ],
+    "requiredTraits": [
+      {
+        "name": "Star Guardian",
+        "minUnits": 1,
+        "weight": 0.5
+      },
+      {
+        "name": "Star Guardian",
+        "minUnits": 2,
+        "weight": 1
+      },
+      {
+        "name": "Star Guardian",
+        "minUnits": 3,
+        "weight": 1.5
+      },
+      {
+        "name": "Star Guardian",
+        "minUnits": 4,
+        "weight": 2
+      },
+      {
+        "name": "Star Guardian",
+        "minUnits": 5,
+        "weight": 3
+      },
+      {
+        "name": "Star Guardian",
+        "minUnits": 6,
+        "weight": 4.5
+      }
+    ],
+    "coreItems": [
+      {
+        "id": 1,
+        "weight": 2.5,
+        "maxEffective": 3
+      },
+      {
+        "id": 8,
+        "weight": 1.5,
+        "maxEffective": 2
+      },
+      {
+        "id": 2,
+        "weight": 2,
+        "maxEffective": 2
+      }
+    ],
+    "recommendedItems": [
+      {
+        "id": 3,
+        "weight": 1,
+        "maxEffective": 2
+      },
+      {
+        "id": 5,
+        "weight": 1,
+        "maxEffective": 2
+      },
+      {
+        "id": 7,
+        "weight": 1,
+        "maxEffective": 3
+      }
+    ],
+    "tier": "S"
+  },
+  {
+    "name": "Kog\u0027Maw",
+    "champions": [
+      3,
+      11,
+      23,
+      26,
+      49,
+      38,
+      41,
+      31
+    ],
+    "coreChampions": [
+      {
+        "id": 38,
+        "weight": 3
+      },
+      {
+        "id": 41,
+        "weight": 2.5
+      },
+      {
+        "id": 31,
+        "weight": 3
+      }
+    ],
+    "requiredTraits": [
+      {
+        "name": "Bastion",
+        "minUnits": 2,
+        "weight": 2
+      },
+      {
+        "name": "Bastion",
+        "minUnits": 4,
+        "weight": 3
+      },
+      {
+        "name": "Bastion",
+        "minUnits": 6,
+        "weight": 4
+      }
+    ],
+    "coreItems": [
+      {
+        "id": 8,
+        "weight": 2,
+        "maxEffective": 2
+      },
+      {
+        "id": 1,
+        "weight": 1.5,
+        "maxEffective": 1
+      }
+    ],
+    "recommendedItems": [
+      {
+        "id": 6,
+        "weight": 1,
+        "maxEffective": 1
+      },
+      {
+        "id": 2,
+        "weight": 1,
+        "maxEffective": 2
+      },
+      {
+        "id": 3,
+        "weight": 1,
+        "maxEffective": 2
+      },
+      {
+        "id": 7,
+        "weight": 1,
+        "maxEffective": 3
+      }
+    ],
+    "tier": "S"
+  },
+  {
+    "name": "Rerroll Janna \u002B Kobuko",
+    "champions": [
+      1,
+      17,
+      20,
+      36,
+      39,
+      48,
+      45,
+      51
+    ],
+    "coreChampions": [
+      {
+        "id": 17,
+        "weight": 3
+      },
+      {
+        "id": 20,
+        "weight": 3
+      }
+    ],
+    "requiredTraits": [
+      {
+        "name": "Strategist",
+        "minUnits": 2,
+        "weight": 2.5
+      },
+      {
+        "name": "Strategist",
+        "minUnits": 3,
+        "weight": 3
+      },
+      {
+        "name": "Mighty Mech",
+        "minUnits": 3,
+        "weight": 2.5
+      }
+    ],
+    "coreItems": [
+      {
+        "id": 8,
+        "weight": 2.5,
+        "maxEffective": 5
+      },
+      {
+        "id": 4,
+        "weight": 1.5,
+        "maxEffective": 3
+      }
+    ],
+    "recommendedItems": [
+      {
+        "id": 2,
+        "weight": 1,
+        "maxEffective": 2
+      },
+      {
+        "id": 3,
+        "weight": 1,
+        "maxEffective": 3
+      },
+      {
+        "id": 1,
+        "weight": 1,
+        "maxEffective": 1
+      },
+      {
+        "id": 6,
+        "weight": 1,
+        "maxEffective": 1
+      }
+    ],
+    "tier": "S"
+  }
+]

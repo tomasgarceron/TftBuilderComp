@@ -1,0 +1,320 @@
+﻿@page "/1"
+@using System.Text.Json
+@using TftComp.Models
+@inject TftComp.Services.DataService DataService
+@inject IJSRuntime JS
+
+<h3>Editor de Composiciones (Builder)</h3>
+
+@if (champions == null || items == null)
+{
+    <p>Cargando...</p>
+}
+else
+{
+    <div style="display:flex; gap:18px; align-items:flex-start;">
+        <!-- LEFT: Champions -->
+        <div style="flex:1; min-width:320px; background:#2b2f33; padding:12px; border-radius:8px;">
+            <h4>Campeones disponibles</h4>
+
+            <div style="display:flex; flex-wrap:wrap; gap:6px;">
+                @foreach (var ch in champions.OrderBy(c => c.Cost).ThenBy(c => c.Name))
+                {
+                    <button type="button" class="champ-button cost-@ch.Cost" @onclick="() => AddSelectedChampion(ch.Id)"
+                            style="padding:6px 10px; border-radius:8px; border:none; cursor:pointer;">
+                        @ch.Name
+                    </button>
+                }
+            </div>
+
+            <h5 style="margin-top:12px;">Campeones en esta composición</h5>
+            <div style="display:flex; flex-direction:column; gap:8px; margin-top:6px;">
+                @for (int i = 0; i < selChampions.Count; i++)
+                {
+                    var sc = selChampions[i];
+                    var chObj = champions.FirstOrDefault(x => x.Id == sc.ChampionId);
+                    var uid = sc.Uid;
+                    <!--- local para evitar ambiguedades en closures --->
+                    <div style="display:flex; gap:8px; align-items:center; background:#34373b; padding:8px; border-radius:6px;">
+                        <div style="flex:1;">
+                            <strong>@(chObj?.Name ?? ("Id " + sc.ChampionId))</strong>
+                            <div style="font-size:12px; color:#ccc;">Cost: @(chObj?.Cost ?? 0) — Traits: @(chObj != null ? string.Join(", ", chObj.Traits) : "")</div>
+                        </div>
+
+                        <label style="display:flex; align-items:center; gap:6px;">
+                            <input type="checkbox" @bind="sc.IsCore" /> Core
+                        </label>
+
+                        <label style="display:flex; align-items:center; gap:6px;">
+                            Weight:
+                            <input type="number" min="0" step="0.5" style="width:72px;" @bind="sc.Weight" />
+                        </label>
+
+                        <button type="button" class="remove-btn" @onclick="() => RemoveSelectedChampion(uid)">X</button>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- RIGHT: Items -->
+        <div style="flex:0.9; min-width:300px; background:#2b2f33; padding:12px; border-radius:8px;">
+            <h4>Ítems disponibles</h4>
+            <div style="display:flex; flex-wrap:wrap; gap:6px;">
+                @foreach (var it in items.OrderBy(i => i.Name))
+                {
+                    <button type="button" class="item-button" @onclick="() => AddSelectedItem(it.Id)"
+                            style="padding:6px 10px; border-radius:8px; border:1px solid #666; cursor:pointer;">
+                        @it.Name
+                    </button>
+                }
+            </div>
+
+            <h5 style="margin-top:12px;">Ítems en esta composición</h5>
+            <div style="display:flex; flex-direction:column; gap:8px; margin-top:6px;">
+                @for (int i = 0; i < selItems.Count; i++)
+                {
+                    var si = selItems[i];
+                    var itObj = items.FirstOrDefault(x => x.Id == si.ItemId);
+                    var uid = si.Uid;
+                    <div style="display:flex; gap:8px; align-items:center; background:#34373b; padding:8px; border-radius:6px;">
+                        <div style="flex:1;">
+                            <strong>@(itObj?.Name ?? ("Id " + si.ItemId))</strong>
+                            <div style="font-size:12px; color:#ccc;">(id: @si.ItemId)</div>
+                        </div>
+
+                        <label style="display:flex; align-items:center; gap:6px;">
+                            <input type="checkbox" @bind="si.IsCore" /> Core
+                        </label>
+
+                        <label>
+                            Weight:
+                            <input type="number" min="0" step="0.5" style="width:72px;" @bind="si.Weight" />
+                        </label>
+
+                        <label>
+                            Máx. efectivos:
+                            <input type="number" min="1" step="1" style="width:72px;" @bind="si.MaxEffective" />
+                        </label>
+
+                        <button type="button" class="remove-btn" @onclick="() => RemoveSelectedItem(uid)">X</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- Traits y metadatos -->
+    <div style="margin-top:14px; display:flex; gap:12px;">
+        <div style="flex:1; background:#2b2f33; padding:12px; border-radius:8px;">
+            <h4>Traits requeridos</h4>
+            <div style="display:flex; gap:8px; align-items:center;">
+                <label>
+                    Trait:
+                    <select @bind="newTraitName">
+                        <option value="">-- Seleccionar trait --</option>
+                        @foreach (var trait in allTraits)
+                        {
+                            <option value="@trait">@trait</option>
+                        }
+                    </select>
+                </label>
+
+                <label>
+                    Min Units:
+                    <input type="number" min="1" style="width:90px;" @bind="newTraitMinUnits" />
+                </label>
+
+                <label>
+                    Weight:
+                    <input type="number" min="0" step="0.5" style="width:90px;" @bind="newTraitWeight" />
+                </label>
+
+                <button type="button" @onclick="AddTrait">Agregar trait</button>
+            </div>
+
+            <div style="margin-top:8px;">
+                @foreach (var t in selTraits)
+                {
+                    <div style="display:flex; gap:8px; align-items:center; background:#34373b; padding:6px; border-radius:6px; margin-top:6px;">
+                        <div style="flex:1;">@t.Name — min: @t.MinUnits — w: @t.Weight</div>
+                        <button type="button" class="remove-btn" @onclick="() => RemoveTrait(t)">X</button>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div style="flex:1; background:#2b2f33; padding:12px; border-radius:8px;">
+            <h4>Metadatos composición</h4>
+            <div style="display:flex; flex-direction:column; gap:8px;">
+                <input placeholder="Id (numérico)" @bind="compId" />
+                <input placeholder="Nombre" @bind="compName" />
+                <input placeholder="Descripción" @bind="compDesc" />
+
+                <label>
+                    Tier:
+                    <select @bind="compTier">
+                        <option value="S">S</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                    </select>
+                </label>
+
+                <div style="display:flex; gap:8px;">
+                    <button type="button" @onclick="GenerateJsonPreview">Generar JSON (vista)</button>
+                    <button type="button" @onclick="DownloadJsonAsync">Descargar JSON</button>
+                    <button type="button" @onclick="CopyJsonToClipboard">Copiar al portapapeles</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JSON preview -->
+    <div style="margin-top:12px;">
+        <h4>Vista previa JSON</h4>
+        <textarea style="width:100%; height:260px; background:#0f1112; color:#eaeaea; padding:8px;"
+              readonly>@jsonPreview</textarea>
+    </div>
+}
+
+@code {
+    // Cargado
+    private List<Champion>? champions;
+    private List<Item>? items;
+
+    // Builders internos (ahora con Uid para borrar por identidad)
+    class SelChamp { public Guid Uid = Guid.NewGuid(); public int ChampionId; public bool IsCore = false; public double Weight = 1; }
+    class SelItem { public Guid Uid = Guid.NewGuid(); public int ItemId; public bool IsCore = false; public double Weight = 1; public int MaxEffective = 3; }
+
+    private List<SelChamp> selChampions = new();
+    private List<SelItem> selItems = new();
+    private List<CompTrait> selTraits = new();
+
+    // metadata for new trait
+    private string newTraitName = "";
+    private int newTraitMinUnits = 2;
+    private double newTraitWeight = 3;
+
+    // comp metadata
+    private string compId = "0";
+    private string compName = "";
+    private string compDesc = "";
+    private string compTier = "C";
+
+    private string jsonPreview = "";
+
+    // listado completo de traits que me pasaste
+    private List<string> allTraits = new()
+    {
+        "Bastion", "Battle Academia", "Crystal Gambit", "Duelist", "Edgelord",
+        "Executioner", "Heavyweight", "Juggernaut", "Luchador", "Mentor", "Mighty Mech",
+        "Monster Trainer", "Prodigy", "Protector", "Rogue Captian", "Rosemother", "Sniper",
+        "Sorcerer", "Star Guardian", "Strategist", "Supreme Cells", "The Crew", "Wraith"
+    };
+
+    protected override async Task OnInitializedAsync()
+    {
+        champions = await DataService.GetChampionsAsync();
+        items = await DataService.GetItemsAsync();
+    }
+
+    // champion helpers
+    void AddSelectedChampion(int champId)
+    {
+        selChampions.Add(new SelChamp { Uid = Guid.NewGuid(), ChampionId = champId, IsCore = false, Weight = 1 });
+        StateHasChanged();
+    }
+
+    void RemoveSelectedChampion(Guid uid)
+    {
+        var idx = selChampions.FindIndex(x => x.Uid == uid);
+        if (idx >= 0)
+        {
+            selChampions.RemoveAt(idx);
+            StateHasChanged();
+        }
+    }
+
+    // item helpers
+    void AddSelectedItem(int itemId)
+    {
+        selItems.Add(new SelItem { Uid = Guid.NewGuid(), ItemId = itemId, IsCore = false, Weight = 1, MaxEffective = 3 });
+        StateHasChanged();
+    }
+
+    void RemoveSelectedItem(Guid uid)
+    {
+        var idx = selItems.FindIndex(x => x.Uid == uid);
+        if (idx >= 0)
+        {
+            selItems.RemoveAt(idx);
+            StateHasChanged();
+        }
+    }
+
+    // traits
+    void AddTrait()
+    {
+        if (string.IsNullOrWhiteSpace(newTraitName)) return;
+        selTraits.Add(new CompTrait { Name = newTraitName.Trim(), MinUnits = newTraitMinUnits, Weight = newTraitWeight });
+        newTraitName = "";
+        newTraitMinUnits = 2;
+        newTraitWeight = 3;
+        StateHasChanged();
+    }
+    void RemoveTrait(CompTrait t)
+    {
+        selTraits.Remove(t);
+        StateHasChanged();
+    }
+
+    // Build Composition model
+    Composition BuildComposition()
+    {
+        var comp = new Composition
+        {
+            Name = compName ?? "",
+            Tier = compTier,
+            Champions = selChampions.Select(s => s.ChampionId).Distinct().ToList(),
+            CoreChampions = selChampions.Where(s => s.IsCore)
+                                        .GroupBy(s => s.ChampionId)
+                                        .Select(g => new CoreChampion { Id = g.Key, Weight = g.First().Weight })
+                                        .ToList(),
+            RequiredTraits = selTraits.ToList(),
+            RecommendedItems = selItems.Where(si => !si.IsCore)
+                                      .GroupBy(si => si.ItemId)
+                                      .Select(g => new CoreItem { Id = g.Key, Weight = g.First().Weight, MaxEffective = g.First().MaxEffective })
+                                      .ToList(),
+            CoreItems = selItems.Where(si => si.IsCore)
+                                .GroupBy(si => si.ItemId)
+                                .Select(g => new CoreItem { Id = g.Key, Weight = g.First().Weight, MaxEffective = g.First().MaxEffective })
+                                .ToList()
+        };
+
+        return comp;
+    }
+
+    void GenerateJsonPreview()
+    {
+        var comp = BuildComposition();
+        var opts = new JsonSerializerOptions { WriteIndented = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+        jsonPreview = JsonSerializer.Serialize(comp, opts);
+    }
+
+    // JS interop
+    async Task DownloadJsonAsync()
+    {
+        var comp = BuildComposition();
+        var opts = new JsonSerializerOptions { WriteIndented = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+        var json = JsonSerializer.Serialize(comp, opts);
+        await JS.InvokeVoidAsync("downloadJson", $"{(string.IsNullOrWhiteSpace(comp.Name) ? "composition" : comp.Name)}.json", json);
+    }
+
+    async Task CopyJsonToClipboard()
+    {
+        var comp = BuildComposition();
+        var opts = new JsonSerializerOptions { WriteIndented = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+        var json = JsonSerializer.Serialize(comp, opts);
+        await JS.InvokeVoidAsync("copyToClipboard", json);
+    }
+}

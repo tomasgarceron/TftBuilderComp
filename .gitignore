@@ -1,0 +1,21 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build artifacts
+bin/
+obj/
+
+# Logs
+*.log
+
+# Backup files
+*.bak
+*.tmp
+
+# Others
+.vscode/
+.idea/

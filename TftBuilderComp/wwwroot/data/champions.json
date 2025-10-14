@@ -1,0 +1,450 @@
+[
+  {
+    "Id": 1,
+    "name": "Atrox",
+    "cost": 1,
+    "traits": [ "Mighty Mech", "Heavyweight", "Juggernaut" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 2,
+    "name": "Ezreal",
+    "cost": 1,
+    "traits": [ "Battle Academia", "Prodigy" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 3,
+    "name": "Garen",
+    "cost": 1,
+    "traits": [ "Battle Academia", "Bastion" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 4,
+    "name": "Gnar",
+    "cost": 1,
+    "traits": [ "Luchador", "Sniper" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 5,
+    "name": "Kalista",
+    "cost": 1,
+    "traits": [ "Soul Fighter", "Executioner" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 6,
+    "name": "Kayle",
+    "cost": 1,
+    "traits": [ "Wraith", "Duelist", "Juggernaut" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 7,
+    "name": "Kennen",
+    "cost": 1,
+    "traits": [ "Supreme Cells", "Protector", "Sorcerer" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 8,
+    "name": "Lucian",
+    "cost": 1,
+    "traits": [ "Mighty Mech", "Sorcerer" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 9,
+    "name": "Malphite",
+    "cost": 1,
+    "traits": [ "The Crew", "Protector" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 10,
+    "name": "Naafiri",
+    "cost": 1,
+    "traits": [ "Soul Fighter", "Juggernaut" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 11,
+    "name": "Rell",
+    "cost": 1,
+    "traits": [ "Star Guardian", "Bastion" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 12,
+    "name": "Sivir",
+    "cost": 1,
+    "traits": [ "The Crew", "Sniper" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 13,
+    "name": "Syndra",
+    "cost": 1,
+    "traits": [ "Crystal Gambit", "Star Guardian", "Prodigy" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 14,
+    "name": "Zac",
+    "cost": 1,
+    "traits": [ "Wraith", "Heavyweight" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 15,
+    "name": "Dr. Mundo",
+    "cost": 2,
+    "traits": [ "Luchador", "Juggernaut" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 16,
+    "name": "Gangplank",
+    "cost": 2,
+    "traits": [ "Mighty Mech", "Duelist" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 17,
+    "name": "Janna",
+    "cost": 2,
+    "traits": [ "Crystal Gambit", "Protector", "Strategist" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 18,
+    "name": "Jhin",
+    "cost": 2,
+    "traits": [ "Wraith", "Sniper" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 19,
+    "name": "Kai'Sa",
+    "cost": 3,
+    "traits": [ "Supreme Cells", "Duelist" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 20,
+    "name": "Katarina",
+    "cost": 3,
+    "traits": [ "Battle Academia", "Executioner" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 21,
+    "name": "Kobuko",
+    "cost": 2,
+    "traits": [ "Mentor", "Heavyweight" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 22,
+    "name": "Lux",
+    "cost": 2,
+    "traits": [ "Soul Fighter", "Sorcerer" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 23,
+    "name": "Rakan",
+    "cost": 2,
+    "traits": [ "Battle Academia", "Protector" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 24,
+    "name": "Shen",
+    "cost": 2,
+    "traits": [ "The Crew", "Protector", "Edgelord" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 25,
+    "name": "Vi",
+    "cost": 2,
+    "traits": [ "Crystal Gambit", "Juggernaut" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 26,
+    "name": "Xayah",
+    "cost": 2,
+    "traits": [ "Star Guardian", "Edgelord" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 27,
+    "name": "Xin Zhao",
+    "cost": 2,
+    "traits": [ "Monster Trainer", "Soul Fighter" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 28,
+    "name": "Ahri",
+    "cost": 3,
+    "traits": [ "Star Guardian", "Sorcerer" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 29,
+    "name": "Caitlyn",
+    "cost": 3,
+    "traits": [ "Battle Academia", "Sniper" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 30,
+    "name": "Darius",
+    "cost": 3,
+    "traits": [ "Supreme Cells", "Heavyweight" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 31,
+    "name": "Jayce",
+    "cost": 3,
+    "traits": [ "Battle Academia", "Heavyweight" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 32,
+    "name": "Kog'Maw",
+    "cost": 3,
+    "traits": [ "Monster Trainer" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 33,
+    "name": "Lulu",
+    "cost": 3,
+    "traits": [ "Monster Trainer" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 34,
+    "name": "Malzahar",
+    "cost": 3,
+    "traits": [ "Wraith", "Prodigy" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 35,
+    "name": "Neeko",
+    "cost": 3,
+    "traits": [ "Star Guardian", "Protector" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 36,
+    "name": "Rammus",
+    "cost": 3,
+    "traits": [ "Monster Trainer" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 37,
+    "name": "Senna",
+    "cost": 3,
+    "traits": [ "Mighty Mech", "Executioner" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 38,
+    "name": "Smolder",
+    "cost": 3,
+    "traits": [ "Monster Trainer" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 39,
+    "name": "Swain",
+    "cost": 3,
+    "traits": [ "Crystal Gambit", "Bastion", "Sorcerer" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 40,
+    "name": "Udyr",
+    "cost": 3,
+    "traits": [ "Mentor", "Juggernaut", "Duelist" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 41,
+    "name": "Viego",
+    "cost": 3,
+    "traits": [ "Soul Fighter", "Duelist" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 42,
+    "name": "Yasuo",
+    "cost": 3,
+    "traits": [ "Mentor", "Edgelord" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 43,
+    "name": "Ziggs",
+    "cost": 3,
+    "traits": [ "The Crew", "Strategist" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 44,
+    "name": "Akali",
+    "cost": 4,
+    "traits": [ "Supreme Cells", "Executioner" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 45,
+    "name": "Ashe",
+    "cost": 4,
+    "traits": [ "Crystal Gambit", "Duelist" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 46,
+    "name": "Jarvan IV",
+    "cost": 4,
+    "traits": [ "Mighty Mech", "Strategist" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 47,
+    "name": "Jinx",
+    "cost": 4,
+    "traits": [ "Star Guardian", "Sniper" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 48,
+    "name": "Karma",
+    "cost": 4,
+    "traits": [ "Mighty Mech", "Sorcerer" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 49,
+    "name": "K'Sante",
+    "cost": 4,
+    "traits": [ "Wraith", "Protector" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 50,
+    "name": "Leona",
+    "cost": 4,
+    "traits": [ "Battle Academia", "Bastion" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 51,
+    "name": "Poppy",
+    "cost": 4,
+    "traits": [ "Star Guardian", "Heavyweight" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 52,
+    "name": "Ryze",
+    "cost": 4,
+    "traits": [ "Mentor", "Executioner", "Strategist" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 53,
+    "name": "Samira",
+    "cost": 4,
+    "traits": [ "Luchador", "Edgelord" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 54,
+    "name": "Sett",
+    "cost": 4,
+    "traits": [ "Soul Fighter", "Juggernaut" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 55,
+    "name": "Volibear",
+    "cost": 4,
+    "traits": [ "Luchador", "Edgelord" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 56,
+    "name": "Yuumi",
+    "cost": 4,
+    "traits": [ "Battle Academia", "Prodigy" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 57,
+    "name": "Braum",
+    "cost": 5,
+    "traits": [ "The Crew", "Luchador", "Bastion" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 58,
+    "name": "Gwen",
+    "cost": 5,
+    "traits": [ "Soul Fighter", "Sorcerer" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 59,
+    "name": "Lee Sin",
+    "cost": 5,
+    "traits": [ "Stance Master" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 60,
+    "name": "Seraphine",
+    "cost": 5,
+    "traits": [ "Star Guardian", "Prodigy" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 61,
+    "name": "Twisted Fate",
+    "cost": 5,
+    "traits": [ "Rogue Captain", "The Crew" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 62,
+    "name": "Varus",
+    "cost": 5,
+    "traits": [ "Wraith", "Sniper" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 63,
+    "name": "Yone",
+    "cost": 5,
+    "traits": [ "Mighty Mech", "Edgelord" ],
+    "recommendedItems": []
+  },
+  {
+    "Id": 64,
+    "name": "Zyra",
+    "cost": 5,
+    "traits": [ "Crystal Gambit", "Rosemother" ],
+    "recommendedItems": []
+  }
+]

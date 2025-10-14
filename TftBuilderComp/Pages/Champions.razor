@@ -1,0 +1,471 @@
+﻿@page "/"
+@using TftComp.Models
+@inject TftComp.Services.DataService DataService
+
+<h3>Selecciona tus campeones</h3>
+
+@if (champions == null || comps == null || items == null)
+{
+    <p>Cargando...</p>
+}
+else
+{
+    <div class="main-container">
+        <!-- Campeones -->
+        <div class="section">
+            <h4>Campeones</h4>
+            <div class="button-grid">
+                @foreach (var champ in champions.OrderBy(c => c.Cost))
+                {
+                    <button type="button" class="champ-button cost-@champ.Cost"
+                            @onclick="() => AddChampion(champ.Id)">
+                        @champ.Name
+                    </button>
+                }
+            </div>
+
+            <h5>Seleccionados:</h5>
+            <div class="selected-list">
+                @if (selectedUnits.Any())
+                {
+                    @for (int i = 0; i < selectedUnits.Count; i++)
+                    {
+                        var su = selectedUnits[i];
+                        var champ = champions.FirstOrDefault(c => c.Id == su.Id);
+                        if (champ != null)
+                        {
+                            <div class="selected-champ">
+                                <span>@champ.Name (@(new string('⭐', su.Stars)))</span>
+                                <button type="button" class="remove-btn" @onclick="() => RemoveUnit(su.Uid)">X</button>
+                            </div>
+                        }
+                    }
+                }
+                else
+                {
+                    <p>No has agregado campeones aún.</p>
+                }
+            </div>
+        </div>
+
+        <!-- Items -->
+        <div class="section">
+            <h4>Ítems</h4>
+            <div class="button-grid">
+                @foreach (var it in items)
+                {
+                    <button type="button" class="item-button"
+                            @onclick="() => AddItem(it.Id)">
+                        @it.Name
+                    </button>
+                }
+            </div>
+
+            <h5>Seleccionados:</h5>
+            <div class="selected-list">
+                @if (selectedItems.Any())
+                {
+                    @for (int i = 0; i < selectedItems.Count; i++)
+                    {
+                        var entry = selectedItems[i];
+                        var it = items.FirstOrDefault(x => x.Id == entry.ItemId);
+                        if (it != null)
+                        {
+                            <div class="selected-item">
+                                <span>@it.Name</span>
+                                <button type="button" class="remove-btn" @onclick="() => RemoveItem(entry.Uid)">X</button>
+                            </div>
+                        }
+                    }
+                }
+                else
+                {
+                    <p>No has agregado ítems aún.</p>
+                }
+            </div>
+        </div>
+    </div>
+
+    <h4>Composiciones recomendadas:</h4>
+    @if (sortedComps.Any())
+    {
+        <div class="comps-container">
+            @foreach (var cm in sortedComps)
+            {
+                var totalSelected = selectedUnits.Count + selectedItems.Count;
+                var matchPercent = totalSelected > 0
+                ? Math.Min(100, (cm.Score / (totalSelected * 10.0)) * 100)
+                : 0;
+
+                <div class="comp-card">
+                    <h5>@cm.Comp.Name</h5>
+                    <p><strong>Tier:</strong> @cm.Comp.Tier</p>
+                    <p><strong>Score:</strong> @cm.Score.ToString("0.##")</p>
+
+                    <p><strong>Aportes principales:</strong></p>
+                    <ul>
+                        @foreach (var contrib in cm.TopContributions)
+                        {
+                            <li>@contrib.Source (+@contrib.Value.ToString("0.##"))</li>
+                        }
+                    </ul>
+
+                    <p><strong>Próximas recomendaciones:</strong></p>
+                    <ul>
+                        @if (cm.NextRecommendations != null && cm.NextRecommendations.Any())
+                        {
+                            @foreach (var rec in cm.NextRecommendations)
+                            {
+                                <li>@rec.Source (ganancia: @rec.Gain.ToString("0.##"))</li>
+                            }
+                        }
+                        else
+                        {
+                            <li>(sin recomendaciones inmediatas)</li>
+                        }
+                    </ul>
+                </div>
+
+            }
+        </div>
+    }
+    else
+    {
+        <p>No hay coincidencias todavía.</p>
+    }
+
+    <details style="margin-top:12px; color:#ddd;">
+        <div><b>Unidades seleccionadas (lista):</b></div>
+        <ul>
+            @foreach (var su in selectedUnits)
+            {
+                var ch = champions.FirstOrDefault(c => c.Id == su.Id);
+                <li>@(ch?.Name ?? su.Id.ToString()) - @(new string('⭐', su.Stars)) (uid: @su.Uid)</li>
+            }
+        </ul>
+
+        <div style="margin-top:8px;"><b>Conteos equivalentes (1★=1,2★=3,3★=9):</b></div>
+        @{
+            var map = GetChampionCounts();
+        }
+        <ul>
+            @foreach (var kv in map)
+            {
+                var ch = champions.FirstOrDefault(c => c.Id == kv.Key);
+                <li>@(ch?.Name ?? kv.Key.ToString()) : @kv.Value</li>
+            }
+        </ul>
+
+        <div style="margin-top:8px;"><b>Items seleccionados (lista):</b></div>
+        <ul>
+            @foreach (var it in selectedItems)
+            {
+                var itObj = items.FirstOrDefault(i => i.Id == it.ItemId);
+                <li>@(itObj?.Name ?? it.ItemId.ToString()) (uid: @it.Uid)</li>
+            }
+        </ul>
+    </details>
+}
+
+@code {
+    private List<Champion>? champions;
+    private List<Composition>? comps;
+    private List<Item>? items;
+
+    private class SelectedUnit
+    {
+        public Guid Uid { get; set; } = Guid.NewGuid();
+        public int Id { get; set; }
+        public int Stars { get; set; } = 1;
+    }
+    private List<SelectedUnit> selectedUnits = new();
+
+    private class SelectedItemEntry
+    {
+        public Guid Uid { get; set; } = Guid.NewGuid();
+        public int ItemId { get; set; }
+    }
+    private List<SelectedItemEntry> selectedItems = new();
+
+    private class CompMatch
+    {
+        public Composition Comp { get; set; } = default!;
+        public double Score { get; set; }
+        public List<(string Source, double Value)> TopContributions { get; set; } = new();
+        public List<(string Source, double Gain)> NextRecommendations { get; set; } = new();
+    }
+
+    private List<CompMatch> sortedComps = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        champions = await DataService.GetChampionsAsync();
+        comps = await DataService.GetCompsAsync();
+        items = await DataService.GetItemsAsync();
+    }
+
+    private void AddChampion(int champId)
+    {
+        selectedUnits.Add(new SelectedUnit { Id = champId, Stars = 1, Uid = Guid.NewGuid() });
+        TryUpgrade(champId, 1);
+        UpdateCompositions();
+    }
+
+    private void TryUpgrade(int champId, int starsLevel)
+    {
+        var matches = selectedUnits.Where(u => u.Id == champId && u.Stars == starsLevel).ToList();
+
+        while (matches.Count >= 3 && starsLevel < 3)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                var toRemove = matches[j];
+                selectedUnits.Remove(toRemove);
+            }
+
+            selectedUnits.Add(new SelectedUnit { Id = champId, Stars = starsLevel + 1, Uid = Guid.NewGuid() });
+            starsLevel++;
+            matches = selectedUnits.Where(u => u.Id == champId && u.Stars == starsLevel).ToList();
+        }
+    }
+
+    private void RemoveUnit(Guid uid)
+    {
+        var idx = selectedUnits.FindIndex(u => u.Uid == uid);
+        if (idx >= 0)
+        {
+            selectedUnits.RemoveAt(idx);
+            UpdateCompositions();
+        }
+    }
+
+    private void AddItem(int itemId)
+    {
+        selectedItems.Add(new SelectedItemEntry { ItemId = itemId, Uid = Guid.NewGuid() });
+        UpdateCompositions();
+    }
+
+    private void RemoveItem(Guid uid)
+    {
+        var idx = selectedItems.FindIndex(it => it.Uid == uid);
+        if (idx >= 0)
+        {
+            selectedItems.RemoveAt(idx);
+            UpdateCompositions();
+        }
+    }
+
+    private Dictionary<int, int> GetChampionCounts()
+    {
+        var counts = new Dictionary<int, int>();
+        foreach (var u in selectedUnits)
+        {
+            int val = (int)Math.Pow(3, Math.Max(0, u.Stars - 1));
+            if (!counts.ContainsKey(u.Id)) counts[u.Id] = 0;
+            counts[u.Id] += val;
+        }
+        return counts;
+    }
+
+    private int GetTierValue(string tier) => tier switch
+    {
+        "S" => 4,
+        "A" => 3,
+        "B" => 2,
+        "C" => 1,
+        _ => 0
+    };
+
+    private void UpdateCompositions()
+    {
+        sortedComps.Clear();
+        if (comps == null || champions == null || items == null) return;
+
+        var champCounts = GetChampionCounts();
+
+        foreach (var comp in comps)
+        {
+            if (comp == null) continue;
+            double score = 0;
+            var contributions = new List<(string Source, double Value)>();
+
+            // Core champions
+            if (comp.CoreChampions != null)
+            {
+                foreach (var core in comp.CoreChampions)
+                {
+                    champCounts.TryGetValue(core.Id, out int have);
+                    if (have > 0)
+                    {
+                        var champ = champions.FirstOrDefault(c => c.Id == core.Id);
+                        if (champ != null)
+                        {
+                            double weight = core.Weight > 0 ? core.Weight : 2.0;
+                            double val = (weight * champ.Cost) * have;
+                            score += val;
+                            contributions.Add(($"Core Champ: {champ.Name}", val));
+                        }
+                    }
+                }
+            }
+
+            // Non-core champions
+            if (comp.Champions != null)
+            {
+                foreach (var cid in comp.Champions)
+                {
+                    if (comp.CoreChampions != null && comp.CoreChampions.Any(cc => cc.Id == cid)) continue;
+                    champCounts.TryGetValue(cid, out int have);
+                    if (have > 0)
+                    {
+                        var champ = champions.FirstOrDefault(c => c.Id == cid);
+                        if (champ != null)
+                        {
+                            double val = (1.0 * champ.Cost) * have;
+                            score += val;
+                            contributions.Add(($"Champ: {champ.Name}", val));
+                        }
+                    }
+                }
+            }
+
+            // Traits
+            if (comp.RequiredTraits != null)
+            {
+                foreach (var trait in comp.RequiredTraits)
+                {
+                    int traitEquivalent = 0;
+                    foreach (var ch in champions)
+                    {
+                        if (ch.Traits != null && ch.Traits.Contains(trait.Name))
+                        {
+                            champCounts.TryGetValue(ch.Id, out int have);
+                            traitEquivalent += have;
+                        }
+                    }
+                    if (traitEquivalent >= trait.MinUnits)
+                    {
+                        score += trait.Weight;
+                        contributions.Add(($"Trait: {trait.Name}", trait.Weight));
+                    }
+                }
+            }
+
+            // Core items
+            if (comp.CoreItems != null)
+            {
+                foreach (var ci in comp.CoreItems)
+                {
+                    int have = selectedItems.Count(i => i.ItemId == ci.Id);
+                    if (have > 0)
+                    {
+                        int eff = Math.Min(have, ci.MaxEffective);
+                        double val = eff * ci.Weight;
+                        score += val;
+                        var itObj = items.FirstOrDefault(i => i.Id == ci.Id);
+                        contributions.Add(($"Core Item: {itObj?.Name ?? ci.Id.ToString()}", val));
+                    }
+                }
+            }
+
+            // Recommended items
+            if (comp.RecommendedItems != null)
+            {
+                foreach (var ri in comp.RecommendedItems)
+                {
+                    int have = selectedItems.Count(i => i.ItemId == ri.Id);
+                    if (have > 0)
+                    {
+                        int eff = Math.Min(have, ri.MaxEffective);
+                        double val = eff * ri.Weight;
+                        score += val;
+                        var itObj = items.FirstOrDefault(i => i.Id == ri.Id);
+                        contributions.Add(($"Item: {itObj?.Name ?? ri.Id.ToString()}", val));
+                    }
+                }
+            }
+
+            // --- NUEVO: calcular recomendaciones siguientes ---
+            var nextRecs = new List<(string Source, double Gain)>();
+
+            // 1. Early core champions faltantes
+            if (comp.CoreChampions != null)
+            {
+                foreach (var core in comp.CoreChampions)
+                {
+                    var champ = champions.FirstOrDefault(c => c.Id == core.Id);
+                    if (champ != null && champ.Cost <= 3)
+                    {
+                        if (!champCounts.ContainsKey(core.Id) || champCounts[core.Id] == 0)
+                        {
+                            double gain = (core.Weight * champ.Cost);
+                            nextRecs.Add(($"Early Core Champ: {champ.Name}", gain));
+                        }
+                    }
+                }
+            }
+
+            // 2. Traits a 1 unidad
+            if (comp.RequiredTraits != null)
+            {
+                foreach (var trait in comp.RequiredTraits)
+                {
+                    int traitEquivalent = 0;
+                    foreach (var ch in champions)
+                    {
+                        if (ch.Traits != null && ch.Traits.Contains(trait.Name))
+                        {
+                            champCounts.TryGetValue(ch.Id, out int have);
+                            traitEquivalent += have;
+                        }
+                    }
+                    if (traitEquivalent < trait.MinUnits && (trait.MinUnits - traitEquivalent) == 1)
+                    {
+                        nextRecs.Add(($"Completar trait: {trait.Name}", trait.Weight));
+                    }
+                }
+            }
+
+            // 3. Core items faltantes
+            if (comp.CoreItems != null)
+            {
+                foreach (var ci in comp.CoreItems)
+                {
+                    int have = selectedItems.Count(i => i.ItemId == ci.Id);
+                    if (have == 0)
+                    {
+                        var itObj = items.FirstOrDefault(i => i.Id == ci.Id);
+                        double gain = ci.Weight;
+                        nextRecs.Add(($"Core Item: {itObj?.Name ?? ci.Id.ToString()}", gain));
+                    }
+                }
+            }
+
+            var top3 = contributions
+                .OrderByDescending(c => c.Value)
+                .Take(3)
+                .ToList();
+
+            var topNext = nextRecs
+                .OrderByDescending(r => r.Gain)
+                .Take(3)
+                .ToList();
+
+            if (score > 0)
+            {
+                sortedComps.Add(new CompMatch
+                {
+                    Comp = comp,
+                    Score = score,
+                    TopContributions = top3,
+                    NextRecommendations = topNext
+                });
+            }
+        }
+
+        sortedComps = sortedComps
+            .OrderByDescending(x => x.Score)
+            .ThenByDescending(x => GetTierValue(x.Comp.Tier))
+            .ToList();
+    }
+}
