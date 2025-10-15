@@ -128,14 +128,14 @@
   {
     "Id": 19,
     "name": "Kai'Sa",
-    "cost": 3,
+    "cost": 2,
     "traits": [ "Supreme Cells", "Duelist" ],
     "recommendedItems": []
   },
   {
     "Id": 20,
     "name": "Katarina",
-    "cost": 3,
+    "cost": 2,
     "traits": [ "Battle Academia", "Executioner" ],
     "recommendedItems": []
   },
@@ -367,7 +367,7 @@
     "Id": 53,
     "name": "Samira",
     "cost": 4,
-    "traits": [ "Luchador", "Edgelord" ],
+    "traits": [ "Soul Fighter", "Edgelord" ],
     "recommendedItems": []
   },
   {
