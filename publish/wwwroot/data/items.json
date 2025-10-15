@@ -1,0 +1,42 @@
+[
+  {
+    "Id": 1,
+    "Name": "B.F Sword",
+    "Icon": "images/items/botrk.png"
+  },
+  {
+    "Id": 2,
+    "Name": "Chain Vest",
+    "Icon": "images/items/ie.png"
+  },
+  {
+    "Id": 3,
+    "Name": "Giant's' Belt",
+    "Icon": "images/items/rabadon.png"
+  },
+  {
+    "Id": 4,
+    "Name": "Needlessly Large Rod",
+    "Icon": "images/items/fh.png"
+  },
+  {
+    "Id": 5,
+    "Name": "Negatron Cloak",
+    "Icon": "images/items/ga.png"
+  },
+  {
+    "Id": 6,
+    "Name": "Recurve Bow",
+    "Icon": "images/items/jg.png"
+  },
+  {
+    "Id": 7,
+    "Name": "Sparring Gloves",
+    "Icon": "images/items/dd.png"
+  },
+  {
+    "Id": 8,
+    "Name": "Tear of the Goddess",
+    "Icon": "images/items/morello.png"
+  }
+]
